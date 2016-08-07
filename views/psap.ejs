@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="description" content="Gojira Mappu - PSAP">
+    <meta name="author" content="">
+    <link rel="icon" href="http://www.esri.com/favicon.ico">
+    <title>Gojira Mappu - PSAP</title>
+
+    <!-- Calcite Bootstrap -->
+    <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-bootstrap.min-v0.2.css">
+
+    <!-- Calcite Maps -->
+    <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min-v0.2.css">
+    <!--link rel="stylesheet" href="http://localhost/GitHub/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min-v0.2.css"-->
+
+    <!-- ArcGIS JS 4.0 -->
+    <link rel="stylesheet" href="http://js.arcgis.com/4.0/esri/css/main.css">
+
+    <!-- Prettify Code -->
+    <!--<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?&amp;skin=sunburst"></script>-->
+
+    <!-- This map's stylesheet. -->
+    <link rel="stylesheet" href="../styles/psap/default.css">
+
+    <!-- rodan-client TODO: Remove this to the client object. -->
+    <link rel="stylesheet" href="../js/rodan-client/css/style.css">
+
+</head>
+
+<body class="calcite-nav-top">
+
+<!-- Navbar -->
+
+<nav class="navbar calcite-navbar navbar-fixed-top calcite-text-light calcite-bgcolor-off-black">
+
+    <!-- Menu -->
+    <div class="dropdown calcite-dropdown calcite-text-dark calcite-bg-light" role="presentation">
+        <a class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
+            <div class="calcite-dropdown-toggle">
+                <span class="sr-only">Toggle dropdown menu</span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a class="hidden-sm hidden-md" href="#2dTab" aria-controls="2Dtab" role="tab" data-toggle="tab"> Map</a>
+            </li>
+            <li class="active"><a class="hidden-sm hidden-md" href="#3dTab" aria-controls="3Dtab" role="tab"
+                                  data-toggle="tab"> Scene</a></li>
+            <li><a role="button" data-target="#panelBasemaps" aria-haspopup="true"><span
+                            class="glyphicon glyphicon-th-large"></span> Basemaps</a></li>
+            <li><a role="button" id="calciteToggleNavbar" aria-haspopup="true"><span
+                            class="glyphicon glyphicon-fullscreen"></span> Full Map</a></li>
+            <li><a role="button" data-target="#panelCode" aria-haspopup="true"><span class="glyphicon glyphicon-cog"></span> Calls</a></li>
+        </ul>
+    </div><!-- Title -->
+    <div class="calcite-title calcite-overflow-hidden">
+        <div class="calcite-title-main">Gojira Mappu for Dispatch</div>
+        <div class="calcite-title-divider hidden-xs"></div>
+        <div class="calcite-title-sub hidden-xs">We could brand this for you...</div>
+    </div>
+    <!-- Nav -->
+    <ul class="nav navbar-nav calcite-nav">
+        <li><a id="mapNav" class="hidden-xs" href="#2dTab" aria-controls="2Dtab" aria-expanded="true" role="tab"
+               data-toggle="tab" data-tooltip="tip" title="2D View" data-placement="bottom">Map</a></li>
+        <li class="active"><a id="sceneNav" class="hidden-xs" href="#3dTab" aria-controls="3Dtab" role="tab"
+                              data-toggle="tab" data-tooltip="tip" title="3D View" data-placement="bottom">Scene</a>
+        </li>
+        <li>
+            <div class="calcite-navbar-search calcite-search-expander">
+                <div id="searchWidgetDiv"></div>
+            </div>
+        </li>
+    </ul>
+    </div>
+</nav><!--/.calcite-navbar -->
+
+<!-- Map  -->
+
+<div class="calcite-map calcite-map-absolute">
+    <div id="tabContainer" class="tab-content">
+        <div id="2dTab" class="tab-pane fade" role="tabpanel">
+            <div id="mapViewDiv"></div>
+        </div>
+        <div id="3dTab" class="tab-pane fade in active" role="tabpanel">
+            <div id="sceneViewDiv"></div>
+        </div>
+    </div>
+</div><!-- /.calcite-map -->
+
+<!-- Panels -->
+
+<div class="calcite-panels calcite-panels-right calcite-text-light calcite-bg-dark calcite-bgcolor-black panel-group">
+
+    <!-- Basemaps Panel -->
+
+    <div id="panelBasemaps" class="panel collapse">
+        <div id="headingBasemaps" class="panel-heading calcite-bgcolor-off-black" role="tab">
+            <div class="panel-title">
+                <a class="panel-toggle collapsed" role="button" data-toggle="collapse" href="#collapseBasemaps"
+                   aria-expanded="false" aria-controls="collapseBasemaps"><span class="glyphicon glyphicon-th-large"
+                                                                                aria-hidden="true"></span><span
+                            class="panel-label">Basemaps</span></a>
+                <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelBasemaps"><span
+                            class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+            </div>
+        </div>
+        <div id="collapseBasemaps" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingBasemaps">
+            <div class="panel-body">
+                <select id="selectBasemapPanel" class="form-control">
+                    <option value="streets" data-vector="streets-vector">Streets</option>
+                    <option value="satellite" data-vector="satellite" selected="">Satellite</option>
+                    <option value="hybrid" data-vector="hybrid">Hybrid</option>
+                    <option value="national-geographic" data-vector="national-geographic">National Geographic</option>
+                    <option value="topo" data-vector="topo-vector">Topographic</option>
+                    <option value="gray" data-vector="gray-vector">Gray</option>
+                    <option value="dark-gray" data-vector="dark-gray-vector">Dark Gray</option>
+                    <option value="osm" data-vector="osm">Open Street Map</option>
+                    <option value="dark-gray" data-vector="streets-night-vector">Streets Night</option>
+                    <option value="streets" data-vector="streets-navigation-vector">Streets Mobile</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Code Panel -->
+
+    <div id="panelCode" class="panel collapse in">
+        <div id="headingCode" class="panel-heading" role="tab">
+            <div class="panel-title">
+                <a class="panel-toggle" role="button" data-toggle="collapse" href="#collapseCode" data-parent="#panelAccordion" aria-expanded="true" aria-controls="collapseInfo"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span><span class="panel-label"> Calls</span></a>
+                <a class="panel-close" role="button" data-toggle="collapse" data-target="#panelCode"><span class="esri-icon esri-icon-close" aria-hidden="true"></span></a>
+            </div>
+        </div>
+
+        <div id="collapseCode" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingCode">
+            <div class="panel-body">
+
+                <!--<table>-->
+                    <!--<tr><td><b>Number</b>: </td><td>(304) 727-3246</td></tr>-->
+                    <!--<tr><td><b>Caller ID:</b> </td><td>Jane Doe</td></tr>-->
+                    <!--<tr><td><b>Address:</b> </td><td>123 Main Street, Anytown</td></tr>-->
+                <!--</table>-->
+
+                <!-- Responsive Table -->
+                <!--<div class="table-responsive">-->
+                    <!--<table class="table">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th>Firstname</th>-->
+                            <!--<th>Lastname</th>-->
+                            <!--<th>Email</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<td>John</td>-->
+                            <!--<td>Doe</td>-->
+                            <!--<td>john@example.com</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>Mary</td>-->
+                            <!--<td>Moe</td>-->
+                            <!--<td>mary@example.com</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>July</td>-->
+                            <!--<td>Dooley</td>-->
+                            <!--<td>july@example.com</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>July</td>-->
+                            <!--<td>Dooley</td>-->
+                            <!--<td>july@example.com</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>July</td>-->
+                            <!--<td>Dooley</td>-->
+                            <!--<td>july@example.com</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>July</td>-->
+                            <!--<td>Dooley</td>-->
+                            <!--<td>july@example.com</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>July</td>-->
+                            <!--<td>Dooley</td>-->
+                            <!--<td>july@example.com</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>July</td>-->
+                            <!--<td>Dooley</td>-->
+                            <!--<td>july@example.com</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</div>-->
+                <!-- End Responsive Table -->
+
+                <div id="callsNode"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+</div> <!-- /.panel-group -->
+
+
+
+<!-- Calcite Maps and Bootstrap -->
+
+<script src="../js/psap/config.js"></script>
+
+<!-- ArcGIS JS 4.0 -->
+
+<script src="http://js.arcgis.com/4.0/"></script>
+
+<!-- Initialize -->
+
+<script src="../js/psap/init.js"></script>
+
+<script>
+    require([
+        "dojo/_base/declare", "dojo/dom", "dojo/_base/window", "dojo/store/Memory",
+        "dijit/tree/ObjectStoreModel", "dijit/Tree",
+        "dojo/domReady!"
+    ], function(declare, dom, win, Memory, ObjectStoreModel, Tree){
+
+        // Create test store, adding getChildren() method needed by ObjectStoreModel
+        var store = new Memory({
+            data: [
+                { id: 0, label: "<strong>Active</strong>"},
+                {id: 1, label: "1116 Killian Blvd SE.", parent: 0},
+                {id: 101, label: "<b>Phone</b>: (701) 220-8966", parent: 1, tree_node_type: 'leaf'},
+                {id: 2, label: "1600 Pensylvania Ave.", parent: 0},
+                {id: 201, label: "<b>Phone</b>: (304) 727-4567", parent: 2,tree_node_type: 'leaf'},
+                {id: 3, label: "2020 County Road 137", parent: 0},
+                {id: 301, label: "<b>Phone</b>: (201) 555-1212", parent: 3, tree_node_type: 'leaf'},
+                {id: 302, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 303, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 304, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 305, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 306, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 307, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 308, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 309, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 309, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 310, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 311, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 312, label: "Overflow", parent: 3, tree_node_type: 'leaf'},
+                {id: 313, label: "Overflow", parent: 3, tree_node_type: 'leaf'}
+            ],
+            getChildren: function(object){
+                return this.query({parent: object.id});
+            }
+        });
+
+        // Create the model
+        var model = new ObjectStoreModel({
+            store: store,
+            query: {id: 0},
+            labelAttr: "label",
+            mayHaveChildren: function(item){
+                return item.tree_node_type !== 'leaf';
+            }
+        });
+
+        // Custom TreeNode class (based on dijit.TreeNode) that allows rich text labels
+        var MyTreeNode = declare(Tree._TreeNode, {
+            _setLabelAttr: {node: "labelNode", type: "innerHTML"}
+        });
+
+        // Create the Tree.
+        var tree = new Tree({
+            model: model,
+            _createTreeNode: function(args){
+                return new MyTreeNode(args);
+            },
+            openOnClick: true
+        });
+        tree.placeAt(dom.byId("callsNode"));
+        tree.startup();
+    });
+</script>
+
+</body>
+</html>

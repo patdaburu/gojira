@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/stylesheets/w3.css">
+
+
+<script src="/javascripts/css-element-queries/src/ResizeSensor.js"></script>
+<script src="/javascripts/css-element-queries/src/ElementQueries.js"></script>
+
+<% include ../partials/arcgis-js-api-4 %>
+<style>
+    html, body, #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+    }
+</style>
+
+<style>
+    html,
+    body {
+        height: 100%;
+        margin: 0
+    }
+
+    .box {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+    }
+
+    .box .row {
+        border: 1px dotted grey;
+    }
+
+    .box .row.header {
+        flex: 0 1 auto;
+    }
+
+    .box .row.content {
+        flex: 1 1 auto;
+    }
+
+    .box .row.footer {
+        flex: 0 1 40px;
+    }
+</style>
+
+<script>
+    require([
+        "esri/Map",
+        "esri/views/MapView",
+        "dojo/domReady!"
+    ], function(Map, MapView) {
+        var map = new Map({
+            basemap: "streets"
+        });
+
+        var view = new MapView({
+            container: "viewDiv",  // Reference to the DOM node that will contain the view
+            map: map               // References the map object created in step 3
+        });
+    });
+</script>
+
+
+<body>
+
+<!--<div class="w3-container w3-sand">-->
+    <!--<h1>My Car</h1>-->
+<!--</div>-->
+
+
+
+<!--<div class="w3-container">-->
+    <!--<div id="viewDiv"></div>-->
+<!--</div>-->
+
+<!--<div class="w3-container w3-sand">-->
+    <!--<p>My footer information</p>-->
+<!--</div>-->
+
+<!-- Obviously, you could use HTML5 tags like `header`, `footer` and `section` -->
+
+<div class="box">
+    <div class="row header">
+        <div class="w3-container w3-sand">
+        <h1>My Car</h1>
+        </div>
+    </div>
+    <div class="row content">
+        <div id="viewDiv"></div>
+    </div>
+    <div class="row footer">
+        <div class="w3-container w3-sand">
+        <p>My footer information</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

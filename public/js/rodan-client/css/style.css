@@ -1,0 +1,30 @@
+
+/* Style the expando text. */
+.dijitExpandoText {
+    /*background-image: url('http://findicons.com/files/icons/2625/google_plus_interface_icons/18/star.png') !important;*/
+    display: none;
+}
+
+/* Style the expando image. */
+.dijitTreeExpando {
+    display: inline-block;
+    background-image: url("https://dojotoolkit.org/reference-guide/1.10/_static/js/dijit/themes/claro/images/treeExpandImages.png");
+    width: 16px;
+    height: 16px;
+    background-position: -35px 0;
+}
+
+/* Leaf nodes with no children. */
+.dijitTreeExpandoLeaf {
+    display: none;
+}
+
+.dijitTreeExpandoClosed {
+    background-position: 1px 0;
+}
+
+
+
+
+
+

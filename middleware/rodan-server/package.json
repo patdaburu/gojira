@@ -1,0 +1,12 @@
+{
+  "name": "rodan",
+  "version": "0.0.1",
+  "description": "PSAP call handling for Node.js",
+  "author": "Pat Daburu",
+  "main": "index.js",
+  "license": "AML",
+  "dependencies": {
+    "express": "^4.14.0",
+    "underscore": "^1.8.3"
+  }
+}

@@ -1,0 +1,30 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Style the code window */
+
+pre.prettyprint {
+    margin: 0;
+    padding-bottom: 0;
+    width: 100%;
+    border: 0;
+    font-size: 15px; /* Sizes: 13px (small) 15px (normal) 17px (large) */
+}
+
+/* Adjust size of the code window */
+
+.calcite-panels .panel-body {
+    width: 350px;
+    max-height: 700px;
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .calcite-panels .panel-body {
+        width: 100%;
+        max-height: 250px;
+    }
+}
