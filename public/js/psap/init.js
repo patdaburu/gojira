@@ -11,7 +11,11 @@ require(["esri/Map",
     "esri/views/SceneView",
     "esri/widgets/Search",
     "esri/core/watchUtils",
+    "dojo/dom",
     "dojo/query",
+
+    // Gigan
+    "gigan/widgets/example/ExampleWidget",
 
     // Bootstrap
     "bootstrap/Collapse",
@@ -21,7 +25,7 @@ require(["esri/Map",
     // Calcite-maps
     "calcite-maps/calcitemaps-v0.2",
     "dojo/domReady!"
-], function (Map, Basemap, MapView, SceneView, Search, watchUtils, query) {
+], function (Map, Basemap, MapView, SceneView, Search, watchUtils, dom, query, ExampleWidget) {
 
     // App
     app = {
@@ -118,5 +122,9 @@ require(["esri/Map",
         }
         syncSearch();
     });
+
+    // Add an example widget.
+    var exampleWidget = new ExampleWidget({}, dom.byId("exampleWidget"));
+    exampleWidget.startup();
 
 });

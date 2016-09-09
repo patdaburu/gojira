@@ -16,8 +16,8 @@ var dojoConfig = {
             //location: "http://localhost/GitHub/calcite-maps/dist/js/dojo"
         },
         {
-            name: "gojiramappu",
-            location: (window.location.href.substr(0, window.location.href.lastIndexOf('/')) + "/js/gojiramappu")
+            name: "gigan",
+            location: (window.location.href.substr(0, window.location.href.lastIndexOf('/')) + "/js/gigan")
         }
     ]
 };
